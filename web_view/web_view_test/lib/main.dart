@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Webview Demo Page'),
+      home: const MyHomePage(title: 'Cool Webview Demo'),
     );
   }
 }
@@ -55,9 +55,22 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 60,
             ),
-            ElevatedButton(
-                onPressed: () => toggleWebView(),
-                child: const Text('Toggle Tweet')),
+            GestureDetector(
+              onTap: toggleWebView,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.blue[400],
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: const Text(
+                  'Toggle Content',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+            ),
             const Expanded(
               child: SizedBox(
                 height: 10,
@@ -69,8 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15)),
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
                     border: Border.all(
                         color: const Color.fromRGBO(66, 165, 245, 1),
                         style: BorderStyle.solid,
