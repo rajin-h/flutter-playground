@@ -139,11 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPageStarted: (String url) {
                               print('Page started loading: $url');
                             },
-                            onPageFinished: (String url) {
-                              print('Page finished loading: $url');
-                            },
+                            onPageFinished: (String url) {},
                             gestureNavigationEnabled: true,
-                            backgroundColor: Colors.blue,
+                            backgroundColor: Colors.blue[400],
                           ),
                         ),
                       )
