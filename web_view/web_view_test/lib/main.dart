@@ -64,9 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 50,
               ),
             ),
-            //
-            // Below is the custom web view component
-            //
+
+            //////////////////////////////////
+            //                              //
+            // BELOW IS A CUSTOM WEB WIDGET //
+            //                              //
+            //////////////////////////////////
             SizedBox(
               child: Stack(children: [
                 AnimatedPositioned(
