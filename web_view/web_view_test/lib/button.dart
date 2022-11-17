@@ -34,9 +34,7 @@ class _DefaultButtonState extends State<DefaultButton> {
         child: Text(
           widget.text,
           style: TextStyle(
-              color: !widget.invert
-                  ? Colors.white
-                  : const Color.fromRGBO(66, 165, 245, 1),
+              color: !widget.invert ? Colors.white : widget.color,
               fontSize: 15,
               fontWeight: FontWeight.w500),
         ),
