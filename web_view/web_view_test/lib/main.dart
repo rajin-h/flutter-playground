@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         ),
                                         SizedBox(
                                           child: Text(
-                                            '15/04/22',
+                                            'Apr 15, 2022',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 13,
