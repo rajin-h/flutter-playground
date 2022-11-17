@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 class DefaultButton extends StatefulWidget {
   const DefaultButton(
-      {super.key, required this.text, this.onTap, required this.color});
+      {super.key,
+      required this.invert,
+      required this.text,
+      this.onTap,
+      required this.color});
 
   final void Function()? onTap;
+  final bool invert;
   final text;
   final Color color;
 
@@ -24,8 +29,12 @@ class _DefaultButtonState extends State<DefaultButton> {
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Text(
           widget.text,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
+          style: TextStyle(
+              color: !widget.invert
+                  ? Colors.white
+                  : const Color.fromRGBO(66, 165, 245, 1),
+              fontSize: 15,
+              fontWeight: FontWeight.w500),
         ),
       ),
     );

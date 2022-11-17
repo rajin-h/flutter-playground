@@ -31,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _isVisible = true;
+  double _progressVal = 0;
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
 
@@ -55,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 40,
             ),
             DefaultButton(
+              invert: false,
               text: 'Open Tweet',
               onTap: toggleWebView,
               color: const Color(0xFF42A5F5),
@@ -71,39 +73,40 @@ class _MyHomePageState extends State<MyHomePage> {
             //                              //
             //////////////////////////////////
             Visibility(
+              maintainState: true,
               visible: _isVisible,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
                     color: const Color.fromRGBO(66, 165, 245, 1),
                     borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20)),
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)),
                     border: Border.all(
                         color: const Color.fromRGBO(66, 165, 245, 1),
-                        style: BorderStyle.solid,
+                        style: BorderStyle.none,
                         width: 5,
                         strokeAlign: StrokeAlign.outside)),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15)),
+                      topLeft: Radius.circular(18),
+                      topRight: Radius.circular(18)),
                   child: Column(
                     children: [
                       GestureDetector(
                         onDoubleTap: toggleWebView,
                         child: Container(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(15),
                             color: const Color.fromRGBO(66, 165, 245, 1),
-                            height: 60,
+                            height: 70,
                             child: Row(
                               children: [
                                 Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
-                                      SizedBox(
+                                    children: [
+                                      const SizedBox(
                                         child: Text(
                                           'Random Title',
                                           style: TextStyle(
@@ -112,15 +115,35 @@ class _MyHomePageState extends State<MyHomePage> {
                                               fontWeight: FontWeight.w900),
                                         ),
                                       ),
-                                      SizedBox(
-                                        child: Text(
-                                          '@Random_User',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500),
+                                      Row(children: const [
+                                        SizedBox(
+                                          child: Text(
+                                            '@Random_User',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
+                                          ),
                                         ),
-                                      )
+                                        SizedBox(
+                                          width: 20,
+                                          child: Text(
+                                            '|',
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          child: Text(
+                                            '15/04/22',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      ]),
                                     ]),
                                 const Expanded(
                                   child: SizedBox(
@@ -128,10 +151,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                                 DefaultButton(
+                                  invert: true,
                                   text: 'Close',
                                   onTap: toggleWebView,
-                                  color:
-                                      const Color.fromARGB(255, 78, 137, 204),
+                                  color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ],
                             )),
@@ -148,34 +171,44 @@ class _MyHomePageState extends State<MyHomePage> {
                               margin: const EdgeInsets.only(bottom: 5),
                               height: 600,
                               color: const Color.fromRGBO(66, 165, 245, 1),
-                              child: WebView(
-                                initialUrl:
-                                    'https://twitter.com/Tesla/status/1582901412312207361',
-                                javascriptMode: JavascriptMode.unrestricted,
-                                onWebViewCreated: (controller) {
-                                  _controller.complete(controller);
-                                },
-                                onProgress: (int progress) {
-                                  print(
-                                      'WebView is loading (progress : $progress%)');
-                                },
-                                navigationDelegate:
-                                    (NavigationRequest request) {
-                                  if (request.url
-                                      .startsWith('https://www.youtube.com/')) {
-                                    print('blocking navigation to $request}');
-                                    return NavigationDecision.prevent;
-                                  }
-                                  print('allowing navigation to $request');
-                                  return NavigationDecision.navigate;
-                                },
-                                onPageStarted: (String url) {
-                                  print('Page started loading: $url');
-                                },
-                                onPageFinished: (String url) {},
-                                gestureNavigationEnabled: true,
-                                backgroundColor: Colors.blue[400],
-                              ),
+                              child: Stack(children: [
+                                WebView(
+                                  initialUrl:
+                                      'https://twitter.com/Tesla/status/1582901412312207361',
+                                  javascriptMode: JavascriptMode.unrestricted,
+                                  onWebViewCreated: (controller) {
+                                    _controller.complete(controller);
+                                  },
+                                  onProgress: (int progress) {
+                                    print('progress: ${progress}');
+                                    setState(() {
+                                      _progressVal = progress as double;
+                                    });
+                                  },
+                                  navigationDelegate:
+                                      (NavigationRequest request) {
+                                    if (request.url.startsWith(
+                                        'https://www.youtube.com/')) {
+                                      print('blocking navigation to $request}');
+                                      return NavigationDecision.prevent;
+                                    }
+                                    print('allowing navigation to $request');
+                                    return NavigationDecision.navigate;
+                                  },
+                                  onPageStarted: (String url) {
+                                    print('Page started loading: $url');
+                                  },
+                                  onPageFinished: (String url) {},
+                                  gestureNavigationEnabled: true,
+                                  backgroundColor: Colors.blue[400],
+                                ),
+                                Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.blue[400],
+                                    value: _progressVal,
+                                  ),
+                                ),
+                              ]),
                             ),
                           ),
                         ),
