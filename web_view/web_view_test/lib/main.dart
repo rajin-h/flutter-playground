@@ -86,11 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const SizedBox(
-              height: 40,
+              height: 30,
             ),
             DefaultButton(
               invert: false,
-              text: '${_isVisible ? 'Hide' : 'Open'} Tweet',
+              text: '${_isVisible ? 'Hide' : 'Show'} Content',
               onTap: toggleWebView,
               color: const Color(0xFF42A5F5),
             ),
@@ -256,7 +256,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     allowsInlineMediaPlayback: true,
                                     zoomEnabled: true,
                                     initialUrl:
-                                        'https://www.reddit.com/r/flutterhelp/',
+                                        'https://twitter.com/Tesla/status/1590018135977259009',
                                     javascriptMode: JavascriptMode.unrestricted,
                                     onWebViewCreated: (controller) {
                                       _controller.complete(controller);
