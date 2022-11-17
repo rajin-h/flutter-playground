@@ -139,104 +139,97 @@ class _MyHomePageState extends State<MyHomePage> {
                         topRight: Radius.circular(18)),
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onDoubleTap: toggleWebView,
-                          child: Container(
-                              padding: const EdgeInsets.all(15),
-                              color: const Color.fromRGBO(66, 165, 245, 1),
-                              height: 70,
-                              child: Row(
-                                children: [
-                                  Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
+                        Container(
+                            padding: const EdgeInsets.all(15),
+                            color: const Color.fromRGBO(66, 165, 245, 1),
+                            height: 70,
+                            child: Row(
+                              children: [
+                                Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        child: Text(
+                                          'Random Title',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w900),
+                                        ),
+                                      ),
+                                      Row(children: const [
+                                        SizedBox(
                                           child: Text(
-                                            'Random Title',
+                                            '@Random_User',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w900),
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
                                           ),
                                         ),
-                                        Row(children: const [
-                                          SizedBox(
-                                            child: Text(
-                                              '@Random_User',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
+                                        SizedBox(
+                                          width: 15,
+                                          child: Text(
+                                            '|',
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
-                                          SizedBox(
-                                            width: 15,
-                                            child: Text(
-                                              '|',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
+                                        ),
+                                        SizedBox(
+                                          child: Text(
+                                            'Apr 15, 2022',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
                                           ),
-                                          SizedBox(
-                                            child: Text(
-                                              'Apr 15, 2022',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                        ]),
+                                        ),
                                       ]),
-                                  const Expanded(
-                                    child: SizedBox(
-                                      height: 40,
-                                    ),
-                                  ),
-                                  DefaultButton(
-                                    invert: true,
-                                    text: 'Prev',
-                                    onTap: () => {
-                                      _controller.future
-                                          .then((value) => _navigatePrev(value))
-                                    },
-                                    color: const Color.fromARGB(
-                                        255, 255, 255, 255),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
+                                    ]),
+                                const Expanded(
+                                  child: SizedBox(
                                     height: 40,
                                   ),
-                                  DefaultButton(
-                                    invert: true,
-                                    text: 'Next',
-                                    onTap: () => {
-                                      _controller.future
-                                          .then((value) => _navigateNext(value))
-                                    },
-                                    color: const Color.fromARGB(
-                                        255, 255, 255, 255),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                    height: 40,
-                                  ),
-                                  DefaultButton(
-                                    invert: true,
-                                    text: 'Close',
-                                    onTap: _slideDown,
-                                    color: const Color.fromARGB(
-                                        255, 255, 255, 255),
-                                  ),
-                                ],
-                              )),
-                        ),
+                                ),
+                                DefaultButton(
+                                  invert: true,
+                                  text: 'Prev',
+                                  onTap: () => {
+                                    _controller.future
+                                        .then((value) => _navigatePrev(value))
+                                  },
+                                  color: const Color.fromRGBO(66, 165, 245, 1),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                  height: 40,
+                                ),
+                                DefaultButton(
+                                  invert: true,
+                                  text: 'Next',
+                                  onTap: () => {
+                                    _controller.future
+                                        .then((value) => _navigateNext(value))
+                                  },
+                                  color: const Color.fromRGBO(66, 165, 245, 1),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                  height: 40,
+                                ),
+                                DefaultButton(
+                                  invert: true,
+                                  text: 'Close',
+                                  onTap: _slideDown,
+                                  color: const Color.fromRGBO(66, 165, 245, 1),
+                                ),
+                              ],
+                            )),
                         Container(
                           color: const Color.fromRGBO(66, 165, 245, 1),
                           child: ClipRRect(

@@ -29,7 +29,7 @@ class _DefaultButtonState extends State<DefaultButton> {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            color: widget.color,
+            color: !widget.invert ? widget.color : Colors.white,
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Text(
           widget.text,
