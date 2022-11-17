@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:favicon/favicon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:web_view_test/button.dart';
 import 'package:webview_flutter/webview_flutter.dart';

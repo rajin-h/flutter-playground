@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DefaultButton extends StatefulWidget {
   const DefaultButton(
@@ -21,7 +22,10 @@ class _DefaultButtonState extends State<DefaultButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: () {
+        HapticFeedback.heavyImpact();
+        widget.onTap!();
+      },
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
