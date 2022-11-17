@@ -106,8 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
             //                              //
             //////////////////////////////////
             AnimatedSlide(
-              curve: Curves.easeOut,
-              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeIn,
+              duration: const Duration(milliseconds: 300),
               offset: _offset,
               onEnd: () {
                 if (_isVisible) {
