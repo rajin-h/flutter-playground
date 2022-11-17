@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:favicon/favicon.dart';
 import 'package:flutter/material.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:web_view_test/button.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -201,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                   DefaultButton(
                                     invert: true,
-                                    text: '   <   ',
+                                    text: 'Prev',
                                     onTap: () => {
                                       _controller.future
                                           .then((value) => _navigatePrev(value))
@@ -215,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                   DefaultButton(
                                     invert: true,
-                                    text: '   >   ',
+                                    text: 'Next',
                                     onTap: () => {
                                       _controller.future
                                           .then((value) => _navigateNext(value))
@@ -254,7 +256,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     allowsInlineMediaPlayback: true,
                                     zoomEnabled: true,
                                     initialUrl:
-                                        'https://twitter.com/Tesla/status/1582901412312207361',
+                                        'https://www.reddit.com/r/flutterhelp/',
                                     javascriptMode: JavascriptMode.unrestricted,
                                     onWebViewCreated: (controller) {
                                       _controller.complete(controller);
@@ -275,8 +277,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                       print('allowing navigation to $request');
                                       return NavigationDecision.navigate;
                                     },
-                                    onPageStarted: (String url) {
+                                    onPageStarted: (String url) async {
                                       print('Page started loading: $url');
+                                      var iconUrl =
+                                          await FaviconFinder.getBest(url);
+                                      print('favicon: ' + iconUrl.toString());
                                     },
                                     onPageFinished: (String url) {},
                                     gestureNavigationEnabled: true,
