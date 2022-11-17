@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Cool Webview Demo'),
+      home: const MyHomePage(title: 'Cool Web View Demo'),
     );
   }
 }
