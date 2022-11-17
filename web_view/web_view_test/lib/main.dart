@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             DefaultButton(
               invert: false,
-              text: 'Open Tweet',
+              text: '${_isVisible ? 'Hide' : 'Open'} Tweet',
               onTap: toggleWebView,
               color: const Color(0xFF42A5F5),
             ),
