@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _isVisible = true;
-  double _progressVal = 0;
+  int _progressVal = 0;
 
   Offset _offset = Offset.zero;
 
@@ -53,6 +53,24 @@ class _MyHomePageState extends State<MyHomePage> {
   void _slideDown() {
     setState(() => _offset += const Offset(0, 1));
   }
+
+  void _navigatePrev(WebViewController controller) async {
+    if (await controller.canGoBack()) {
+      await controller.goBack();
+    } else {
+      return;
+    }
+  }
+
+  void _navigateNext(WebViewController controller) async {
+    if (await controller.canGoForward()) {
+      await controller.goForward();
+    } else {
+      return;
+    }
+  }
+
+  void _browserClose() {}
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         const SizedBox(
                                           child: Text(
                                             'Random Title',
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 20,
@@ -148,6 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           SizedBox(
                                             child: Text(
                                               '@Random_User',
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 13,
@@ -181,9 +201,38 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                   DefaultButton(
                                     invert: true,
+                                    text: '   <   ',
+                                    onTap: () => {
+                                      _controller.future
+                                          .then((value) => _navigatePrev(value))
+                                    },
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                    height: 40,
+                                  ),
+                                  DefaultButton(
+                                    invert: true,
+                                    text: '   >   ',
+                                    onTap: () => {
+                                      _controller.future
+                                          .then((value) => _navigateNext(value))
+                                    },
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                    height: 40,
+                                  ),
+                                  DefaultButton(
+                                    invert: true,
                                     text: 'Close',
                                     onTap: _slideDown,
-                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255),
                                   ),
                                 ],
                               )),
@@ -202,6 +251,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 color: const Color.fromRGBO(66, 165, 245, 1),
                                 child: Stack(children: [
                                   WebView(
+                                    allowsInlineMediaPlayback: true,
+                                    zoomEnabled: true,
                                     initialUrl:
                                         'https://twitter.com/Tesla/status/1582901412312207361',
                                     javascriptMode: JavascriptMode.unrestricted,
@@ -209,9 +260,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       _controller.complete(controller);
                                     },
                                     onProgress: (int progress) {
-                                      print('progress: ${progress}');
                                       setState(() {
-                                        _progressVal = progress as double;
+                                        _progressVal = progress;
                                       });
                                     },
                                     navigationDelegate:
@@ -231,12 +281,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                     onPageFinished: (String url) {},
                                     gestureNavigationEnabled: true,
                                     backgroundColor: Colors.blue[400],
-                                  ),
-                                  Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.blue[400],
-                                      value: _progressVal,
-                                    ),
                                   ),
                                 ]),
                               ),
