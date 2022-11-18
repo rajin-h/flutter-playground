@@ -102,10 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             CustomWebView(
+                initialURL: 'https://twitter.com/Tesla',
                 webviewTitle: "Cool Title",
                 webviewSubtitle: "Cool Subtitle",
                 webviewDate: DateTime.now().toUtc().toString().substring(0, 11),
-                webviewPrimaryColor: Color.fromARGB(255, 220, 223, 17),
                 offset: _offset,
                 isVisible: _isVisible,
                 controller: _controller,
