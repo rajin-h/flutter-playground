@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:favicon/favicon.dart';
 import 'package:flutter/material.dart';
 import 'package:web_view_test/button.dart';
+import 'package:web_view_test/customwebview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
@@ -31,14 +32,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // internal states
   bool _isVisible = true;
   double _progressVal = 0;
-
   Offset _offset = Offset.zero;
-
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
 
+  // toggles the web view by sliding up or down
   void toggleWebView() {
     if (_isVisible) {
       _slideDown();
@@ -47,14 +48,17 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  // updates offset to slide up
   void _slideUp() {
     setState(() => _offset -= const Offset(0, 1));
   }
 
+  // updates offset to slide down
   void _slideDown() {
     setState(() => _offset += const Offset(0, 1));
   }
 
+  // pop navigation on browser
   void _navigatePrev(WebViewController controller) async {
     if (await controller.canGoBack()) {
       await controller.goBack();
@@ -63,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  // push navigation on browser
   void _navigateNext(WebViewController controller) async {
     if (await controller.canGoForward()) {
       await controller.goForward();
@@ -96,208 +101,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 50,
               ),
             ),
-            //////////////////////////////////
-            //                              //
-            // BELOW IS A CUSTOM WEB WIDGET //
-            //                              //
-            //////////////////////////////////
-            AnimatedSlide(
-              curve: Curves.easeIn,
-              duration: const Duration(milliseconds: 300),
-              offset: _offset,
-              onEnd: () {
-                if (_isVisible) {
-                  setState(() {
-                    _isVisible = false;
-                  });
-                } else {
-                  setState(() {
-                    _isVisible = true;
-                  });
-                }
-              },
-              child: Visibility(
-                maintainState: true,
-                visible: true,
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                      color: const Color.fromRGBO(66, 165, 245, 1),
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25)),
-                      border: Border.all(
-                          color: const Color.fromRGBO(66, 165, 245, 1),
-                          style: BorderStyle.none,
-                          width: 5,
-                          strokeAlign: StrokeAlign.outside)),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(18),
-                        topRight: Radius.circular(18)),
-                    child: Column(
-                      children: [
-                        Container(
-                            padding: const EdgeInsets.all(15),
-                            color: const Color.fromRGBO(66, 165, 245, 1),
-                            height: 70,
-                            child: Row(
-                              children: [
-                                Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(
-                                        child: Text(
-                                          'Random Title',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w900),
-                                        ),
-                                      ),
-                                      Row(children: const [
-                                        SizedBox(
-                                          child: Text(
-                                            '@Random_User',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                          child: Text(
-                                            '|',
-                                            textAlign: TextAlign.center,
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          child: Text(
-                                            'Apr 15, 2022',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
-                                      ]),
-                                    ]),
-                                const Expanded(
-                                  child: SizedBox(
-                                    height: 40,
-                                  ),
-                                ),
-                                DefaultButton(
-                                  invert: true,
-                                  text: 'Prev',
-                                  onTap: () => {
-                                    _controller.future
-                                        .then((value) => _navigatePrev(value))
-                                  },
-                                  color: const Color.fromRGBO(66, 165, 245, 1),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                  height: 40,
-                                ),
-                                DefaultButton(
-                                  invert: true,
-                                  text: 'Next',
-                                  onTap: () => {
-                                    _controller.future
-                                        .then((value) => _navigateNext(value))
-                                  },
-                                  color: const Color.fromRGBO(66, 165, 245, 1),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                  height: 40,
-                                ),
-                                DefaultButton(
-                                  invert: true,
-                                  text: 'Close',
-                                  onTap: _slideDown,
-                                  color: const Color.fromRGBO(66, 165, 245, 1),
-                                ),
-                              ],
-                            )),
-                        Container(
-                          color: const Color.fromRGBO(66, 165, 245, 1),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            ),
-                            child: SingleChildScrollView(
-                              child: Container(
-                                margin: const EdgeInsets.only(bottom: 5),
-                                height: 600,
-                                color: const Color.fromRGBO(66, 165, 245, 1),
-                                child: Stack(children: [
-                                  WebView(
-                                    allowsInlineMediaPlayback: true,
-                                    zoomEnabled: true,
-                                    initialUrl:
-                                        'https://twitter.com/Tesla/status/1590018135977259009',
-                                    javascriptMode: JavascriptMode.unrestricted,
-                                    onWebViewCreated: (controller) {
-                                      _controller.complete(controller);
-                                    },
-                                    onProgress: (int progress) {
-                                      print('heya');
-                                      setState(() {
-                                        _progressVal = progress / 100;
-                                      });
-                                    },
-                                    navigationDelegate:
-                                        (NavigationRequest request) {
-                                      print(
-                                          'new request!!! yay ${request.url}');
-                                      if (request.url.startsWith(
-                                          'https://www.youtube.com/')) {
-                                        print(
-                                            'blocking navigation to $request}');
-                                        return NavigationDecision.prevent;
-                                      }
-                                      print('allowing navigation to $request');
-                                      return NavigationDecision.navigate;
-                                    },
-                                    onPageStarted: (String url) async {
-                                      print('Page started loading: $url');
-                                      var iconUrl =
-                                          await FaviconFinder.getBest(url);
-                                      print('favicon: ' + iconUrl.toString());
-                                    },
-                                    onPageFinished: (String url) {},
-                                    gestureNavigationEnabled: true,
-                                    backgroundColor: Colors.blue[400],
-                                  ),
-                                  Visibility(
-                                    visible: _progressVal != 1.0,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                          color: Colors.red,
-                                          value: _progressVal),
-                                    ),
-                                  )
-                                ]),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            CustomWebView(
+                webviewTitle: "Cool Title",
+                webviewSubtitle: "Cool Subtitle",
+                webviewDate: DateTime.now().toUtc().toString().substring(0, 11),
+                webviewPrimaryColor: Color.fromARGB(255, 220, 223, 17),
+                offset: _offset,
+                isVisible: _isVisible,
+                controller: _controller,
+                progressVal: _progressVal,
+                setVisible: ((isVisible) =>
+                    setState(() => _isVisible = isVisible)),
+                updateProgressVal: ((progressVal) =>
+                    setState(() => _progressVal = progressVal)),
+                slideUp: _slideUp,
+                slideDown: _slideDown,
+                navigatePrev: _navigatePrev,
+                navigateNext: _navigateNext)
           ],
         ),
       ),
