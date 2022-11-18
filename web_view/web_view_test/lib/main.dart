@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:favicon/favicon.dart';
 import 'package:flutter/material.dart';
-import 'package:web_view_test/button.dart';
-import 'package:web_view_test/customwebview.dart';
+import 'package:web_view_test/widgets/button.dart';
+import 'package:web_view_test/widgets/customwebview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
