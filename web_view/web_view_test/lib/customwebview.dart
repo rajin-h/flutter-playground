@@ -67,7 +67,6 @@ class _CustomWebViewState extends State<CustomWebView> {
     return FutureBuilder(
       future: paletteGenerator,
       builder: (context, snapshot) {
-        Widget child;
         if (snapshot.hasData) {
           return AnimatedSlide(
             curve: Curves.easeIn,
@@ -226,13 +225,16 @@ class _CustomWebViewState extends State<CustomWebView> {
                                   onPageStarted: (String url) async {},
                                   onPageFinished: (String url) {},
                                   gestureNavigationEnabled: true,
-                                  backgroundColor: Colors.blue[400],
+                                  backgroundColor:
+                                      snapshot.data?.colors.first ??
+                                          Colors.black,
                                 ),
                                 Visibility(
                                   visible: widget.progressVal != 1.0,
                                   child: Center(
                                     child: CircularProgressIndicator(
-                                        color: Colors.red,
+                                        color: snapshot.data?.colors.first ??
+                                            Colors.black,
                                         value: widget.progressVal),
                                   ),
                                 )
@@ -248,7 +250,8 @@ class _CustomWebViewState extends State<CustomWebView> {
             ),
           );
         } else {
-          return const CircularProgressIndicator();
+          return const SizedBox(
+              height: 600, child: Center(child: CircularProgressIndicator()));
         }
       },
     );

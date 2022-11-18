@@ -102,7 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             CustomWebView(
-                initialURL: 'https://twitter.com/Tesla',
+                initialURL:
+                    'https://stackoverflow.com/questions/62061728/how-to-resolve-future-in-dart',
                 webviewTitle: "Cool Title",
                 webviewSubtitle: "Cool Subtitle",
                 webviewDate: DateTime.now().toUtc().toString().substring(0, 11),
