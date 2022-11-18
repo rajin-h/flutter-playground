@@ -34,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _isVisible = true;
-  int _progressVal = 0;
+  double _progressVal = 0;
 
   Offset _offset = Offset.zero;
 
@@ -253,12 +253,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                       _controller.complete(controller);
                                     },
                                     onProgress: (int progress) {
+                                      print('heya');
                                       setState(() {
-                                        _progressVal = progress;
+                                        _progressVal = progress / 100;
                                       });
                                     },
                                     navigationDelegate:
                                         (NavigationRequest request) {
+                                      print(
+                                          'new request!!! yay ${request.url}');
                                       if (request.url.startsWith(
                                           'https://www.youtube.com/')) {
                                         print(
@@ -278,6 +281,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                     gestureNavigationEnabled: true,
                                     backgroundColor: Colors.blue[400],
                                   ),
+                                  Visibility(
+                                    visible: _progressVal != 1.0,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                          color: Colors.red,
+                                          value: _progressVal),
+                                    ),
+                                  )
                                 ]),
                               ),
                             ),
